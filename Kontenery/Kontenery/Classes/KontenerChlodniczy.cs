@@ -1,4 +1,7 @@
-﻿namespace Kontenery.Classes;
+﻿using Kontenery.Exception;
+
+namespace Kontenery.Classes;
+
 
 class KontenerChlodniczy : Kontener
 {
@@ -35,7 +38,7 @@ class KontenerChlodniczy : Kontener
     {
         if (waga > MaxLadownosc)
         {
-            Console.WriteLine("Za duza waga");
+            throw new OverfillException($"Próba przeładowania kontenera {NumerSeryjny}");
         }
         else MasaLadunku = waga;
     }

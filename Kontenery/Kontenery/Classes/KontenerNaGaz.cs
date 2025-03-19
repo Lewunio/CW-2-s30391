@@ -1,4 +1,5 @@
 ﻿using Kontenery.Interface;
+using Kontenery.Exception;
 
 namespace Kontenery.Classes;
 
@@ -17,7 +18,7 @@ class KontenerNaGaz : Kontener, IHazardNotifier
         if (waga > (MaxLadownosc - MasaLadunku))
         {
             NotifyHazard($"Próba przeładowania kontenera {NumerSeryjny}");
-            throw new Exception("Overfill Exception");
+            throw new OverfillException($"Próba przeładowania kontenera {NumerSeryjny}");
         }
         MasaLadunku += waga;
     }
