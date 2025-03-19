@@ -114,18 +114,29 @@ class KontenerChlodniczy : Kontener
             Console.WriteLine("Nieznany produkt dodaj temperature: ");
             double liczba = Convert.ToDouble(Console.ReadLine());
             TemperaturaProduktow.Add(typProduktu, liczba);
+            Temperatura = liczba;
         }
     }
 
     public override void Laduj(double waga)
     {
-        throw new NotImplementedException();
+        if (waga > MaxLadownosc)
+        {
+            Console.WriteLine("Za duza waga");
+        }
+        else MasaLadunku = waga;
     }
 
     public override void Rozladuj()
     {
-        throw new NotImplementedException();
+        MasaLadunku = 0;
     }
+}
+class Statek
+{
+    protected List<Kontener> Zaladunek { get; }
+    protected double MaxPredkosc { get; }
+
 }
 public class Program
 {
