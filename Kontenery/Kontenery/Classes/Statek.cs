@@ -15,21 +15,24 @@ class Statek
     }
     public void DodajKontener(Kontener kontener)
     {
-        if (Zaladunek.Count <= MaxKontenerow)
+        if (Zaladunek.Count > MaxKontenerow)
             throw new System.Exception("Osiągnięto max kontenerów");
         
-        if ((WagaZaladunku() + kontener.MasaWlasna + kontener.MasaLadunku) > MaxZaladunek)
+        if ((WagaZaladunku() + kontener.MasaWlasna + kontener.MasaLadunku) > MaxZaladunek*1000)
             throw new System.Exception("Osiągnieto max wage kontenerów");
 
         Zaladunek.Add(kontener);
     }
     public void DodajListeKontenerow(List<Kontener> listaKontenerow)
     {
-        Zaladunek.AddRange(listaKontenerow);
+        foreach(Kontener k in listaKontenerow){
+            DodajKontener(k);
+        }
     }
     public void LadujKontener(string idKontenera, double waga)
     {
-        if (ZnajdzKontener(idKontenera) != null)
+        
+        if (ZnajdzKontener(idKontenera) != null && waga+WagaZaladunku()<=MaxZaladunek*1000)
         {
             ZnajdzKontener(idKontenera).Laduj(waga);
         }
@@ -79,8 +82,15 @@ class Statek
         return waga;
     }
     public string InformacjaStatek()
+        
     {
-        return $"Max prędkość: {MaxPredkosc} węzłów, Max Kontenerów: {MaxKontenerow} sztuk, Max załadunku: {MaxZaladunek} ton, Aktualnie Załadunku: {WagaZaladunku()},\n{Zaladunek}";
+        int id = 1;
+        string str = $"Max prędkość: {MaxPredkosc} węzłów, Max Kontenerów: {MaxKontenerow} sztuk, Max załadunku: {MaxZaladunek} ton, Aktualnie Załadunku: {WagaZaladunku()}: \n";
+        foreach (Kontener k in Zaladunek)
+        {
+            str += $"{id++}. {k}\n";
+        }
+        return str;
     }
 
 }

@@ -22,15 +22,15 @@ class KontenerNaPlyny : Kontener, IHazardNotifier
     public override void Laduj(double waga)
     {
         double limit;
-        if (CzyNiebezpieczne) limit = MaxLadownosc * 0.5;
-        else limit = MaxLadownosc * 0.9;
+        if (CzyNiebezpieczne) limit = (MaxLadownosc * 0.5)-MasaLadunku;
+        else limit = (MaxLadownosc * 0.9)-MasaLadunku;
 
         if (waga > limit)
         {
             NotifyHazard($"Próba przeładowania kontenera {NumerSeryjny}");
             throw new OverfillException($"Próba przeładowania kontenera {NumerSeryjny}");
         }
-        MasaLadunku = waga;
+        MasaLadunku += waga;
     }
 
     public override void Rozladuj()

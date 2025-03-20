@@ -36,11 +36,11 @@ class KontenerChlodniczy : Kontener
 
     public override void Laduj(double waga)
     {
-        if (waga > MaxLadownosc)
+        if (waga > (MaxLadownosc-MasaLadunku))
         {
             throw new OverfillException($"Próba przeładowania kontenera {NumerSeryjny}");
         }
-        else MasaLadunku = waga;
+        else MasaLadunku += waga;
     }
 
     public override void Rozladuj()
