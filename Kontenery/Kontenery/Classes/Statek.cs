@@ -2,6 +2,8 @@
 
 class Statek
 {
+    public static int Counter = 1;
+    public int IdStatku;
     public List<Kontener> Zaladunek { get; } = new();
     public double MaxPredkosc { get; }
     public int MaxKontenerow { get; }
@@ -12,7 +14,9 @@ class Statek
         MaxPredkosc = maxPredkosc;
         MaxKontenerow = maxKontenerow;
         MaxZaladunek = maxZaladunek;
+        IdStatku = Counter++;
     }
+
     public void DodajKontener(Kontener kontener)
     {
         if (Zaladunek.Count > MaxKontenerow)
@@ -31,18 +35,23 @@ class Statek
     }
     public void LadujKontener(string idKontenera, double waga)
     {
-        
-        if (ZnajdzKontener(idKontenera) != null && waga+WagaZaladunku()<=MaxZaladunek*1000)
+        if (ZnajdzKontener(idKontenera) == null)
         {
-            ZnajdzKontener(idKontenera).Laduj(waga);
+            throw new System.Exception($"Brak kontenera {idKontenera} na statku");
         }
+        if (waga+WagaZaladunku()>MaxZaladunek*1000)
+        {
+            throw new System.Exception("Osiągnieto max wage kontenerów");
+        }
+        ZnajdzKontener(idKontenera).Laduj(waga);
     }
     public void RozladujKontener(string idKontenera)
     {
-        if (ZnajdzKontener(idKontenera) != null)
+        if (ZnajdzKontener(idKontenera) == null)
         {
-            ZnajdzKontener(idKontenera).Rozladuj();
+            throw new System.Exception($"Brak kontenera {idKontenera} na statku");
         }
+        ZnajdzKontener(idKontenera).Rozladuj();
     }
     public void UsunKontener(string idKontenera)
     {
@@ -51,11 +60,20 @@ class Statek
             Zaladunek.Remove(ZnajdzKontener(idKontenera));
         }
     }
+    public void ZamienKontener(Kontener kontener, string idKontenera)
+    {
+        if (ZnajdzKontener(idKontenera) == null)
+        {
+            throw new System.Exception($"Brak kontenera {idKontenera} na statku");
+        }
+        UsunKontener(idKontenera);
+        DodajKontener(kontener);
+    }
     public void PrzeniesKontener(Statek s, string idKontenera)
     {
         if (ZnajdzKontener(idKontenera) == null)
         {
-            throw new System.Exception("Na statku nie ma miejsca");
+            throw new System.Exception($"Brak kontenera {idKontenera} na statku");
         }
         s.DodajKontener(ZnajdzKontener(idKontenera));
         UsunKontener(idKontenera);
@@ -85,7 +103,7 @@ class Statek
         
     {
         int id = 1;
-        string str = $"Max prędkość: {MaxPredkosc} węzłów, Max Kontenerów: {MaxKontenerow} sztuk, Max załadunku: {MaxZaladunek} ton, Aktualnie Załadunku: {WagaZaladunku()}: \n";
+        string str = $"Id statku: {IdStatku}, Max prędkość: {MaxPredkosc} węzłów, Max Kontenerów: {MaxKontenerow} sztuk, Aktualnie Kontenerów {Zaladunek.Count}, Max załadunku: {MaxZaladunek} ton, Aktualnie Załadunku: {WagaZaladunku()}: \n";
         foreach (Kontener k in Zaladunek)
         {
             str += $"{id++}. {k}\n";
