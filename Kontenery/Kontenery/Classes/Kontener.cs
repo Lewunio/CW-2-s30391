@@ -3,12 +3,12 @@ namespace Kontenery.Classes;
 abstract class Kontener
 {
     private static int Counter = 1;
-    protected double MasaLadunku { get; set; }
-    protected double Wysokosc { get; }
-    protected double MasaWlasna { get; }
-    protected double Glebokosc { get; }
-    protected string NumerSeryjny { get; }
-    protected double MaxLadownosc { get; }
+    public double MasaLadunku { get; set; }
+    public double Wysokosc { get; }
+    public double MasaWlasna { get; }
+    public double Glebokosc { get; }
+    public string NumerSeryjny { get; }
+    public double MaxLadownosc { get; }
 
     public Kontener(double wysokosc, double masaWlasna, double glebokosc, double maxLadownosc, string typ)
     {
@@ -21,4 +21,8 @@ abstract class Kontener
     }
     public abstract void Laduj(double waga);
     public abstract void Rozladuj();
+    public override string ToString()
+    {
+        return $"Numer seryjny: {NumerSeryjny}, Waga £adunku: {MasaLadunku} kg, Waga w³asna: {MasaWlasna} kg, Maksymalna ³adownoœæ: {MaxLadownosc} kg, Wysokoœæ: {Wysokosc}, G³êbokoœæ: {Glebokosc}";
+    }
 }

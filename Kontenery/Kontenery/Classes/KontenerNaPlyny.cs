@@ -6,7 +6,7 @@ namespace Kontenery.Classes;
 
 class KontenerNaPlyny : Kontener, IHazardNotifier
 {
-    protected bool CzyNiebezpieczne { get; set; }
+    public bool CzyNiebezpieczne { get; set; }
 
     public KontenerNaPlyny(double wysokosc, double masaWlasna, double glebokosc, double maxLadownosc, bool czyNiebezpieczne)
         : base(wysokosc, masaWlasna, glebokosc, maxLadownosc, "L")
@@ -37,4 +37,9 @@ class KontenerNaPlyny : Kontener, IHazardNotifier
     {
         MasaLadunku = 0;
     }
+    public override string ToString()
+    {
+        return base.ToString() + $", Materiał niebezpieczny: {CzyNiebezpieczne}";
+    }
+
 }

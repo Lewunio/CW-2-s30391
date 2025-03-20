@@ -5,8 +5,8 @@ namespace Kontenery.Classes;
 
 class KontenerChlodniczy : Kontener
 {
-    protected string TypProduktu { get; }
-    protected double Temperatura { get; }
+    public string TypProduktu { get; }
+    public double Temperatura { get; }
     private static Dictionary<string, double> TemperaturaProduktow = new()
     {
         { "Bananas", 13.3 },
@@ -47,4 +47,9 @@ class KontenerChlodniczy : Kontener
     {
         MasaLadunku = 0;
     }
+    public override string ToString()
+    {
+        return base.ToString() + $", Produkt: {TypProduktu}, Temperatura: {Temperatura}°C";
+    }
+
 }

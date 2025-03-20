@@ -6,7 +6,7 @@ namespace Kontenery.Classes;
 
 class KontenerNaGaz : Kontener, IHazardNotifier
 {
-    protected double Cisnienie { get; }
+    public double Cisnienie { get; }
     public KontenerNaGaz(double wysokosc, double masaWlasna, double glebokosc, double maxLadownosc, double cisnienie)
         : base(wysokosc, masaWlasna, glebokosc, maxLadownosc, "G")
     {
@@ -32,5 +32,10 @@ class KontenerNaGaz : Kontener, IHazardNotifier
     {
         MasaLadunku *= 0.05;
     }
+    public override string ToString()
+    {
+        return base.ToString() + $", Ciśnienie: {Cisnienie} atm";
+    }
+
 }
 
